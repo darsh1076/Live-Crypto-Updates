@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <body>
+        <style type="text/css">
+            .b1 {
+                color:red;
+            }
+            .b1 {
+                color:green;
+            }
+        </style>
+        <div align="center">
+            <h1>Live CryptoUpdates</h1>
+        </div>	<table border="5.0px" align="center">
+            <tr>
+                <th class="b1" ">Bitcoin</th>
+                <th>Ethereum</th>
+                <th>Monero</th>
+                <th>Litecoin</th>
+            </tr>
+            <tr>
+                <td id="bitcoin"></td>
+                <td id="ethereum"></td>
+                <td id="monero"></td>
+                <td id="litecoin"></td>
+            </tr>
+        </table>
+    </body>
+    <script>
+        var b1, b2;
+        var ws = new WebSocket("wss://ws.coincap.io/prices?assets=ALL");
+        ws.onopen = function () {
+            ws.send(JSON.stringify({"id": "bitcoin,ethereum,monero,litecoin"}));
+        };
+
+        ws.onmessage = function (msg) {
+            var response = JSON.parse(msg.data);
+            if (response["bitcoin"]) {
+                //console.log(response["bitcoin"]);
+
+                $('#bitcoin').html(response["bitcoin"]);
+            }
+
+            if (response["ethereum"]) {
+                //console.log(response["bitcoin"]);
+                $('#ethereum').html(response["ethereum"]);
+
+            }
+
+            if (response["monero"]) {
+                //console.log(response["bitcoin"]);
+                $('#monero').html(response["monero"]);
+
+            }
+
+            if (response["litecoin"]) {
+                //console.log(response["bitcoin"]);
+                $('#litecoin').html(response["litecoin"]);
+
+            }
+        }
+    </script>
+</html>
